@@ -1,21 +1,32 @@
 public class PalindromeCheckerApp {
 public static void main(String[] args) {
-        String originalWord = "level"; 
-        String reversedWord = "";
-
-        // 1. Loop (for loop) - Iterating backwards through the string
-        // 2. String Concatenation (+) & Immutability - Because Strings are immutable,
-        //    every time this loop runs, a brand new String object is created in memory.
-        for (int i = originalWord.length() - 1; i >= 0; i--) {
-            reversedWord += originalWord.charAt(i);
+        String word = "racecar"; 
+        
+        // 1. Character Array (char[]) - Convert string to primitive array
+        char[] charArray = word.toCharArray();
+        
+        boolean isPalindrome = true;
+        
+        // 2. Array Indexing & Two-Pointer Technique
+        int left = 0;                         // Pointer at the start
+        int right = charArray.length - 1;     // Pointer at the end
+        
+        // 3. Time Complexity Awareness - Loop only runs for half the array length
+        while (left < right) {
+            // Compare start & end characters
+            if (charArray[left] != charArray[right]) {
+                isPalindrome = false; 
+                break; // Exit early if a mismatch is found!
+            }
+            left++;  // Move start pointer forward
+            right--; // Move end pointer backward
         }
-
-        // 3. equals() Method - We use this instead of "==" to compare the actual 
-        //    characters inside the string, rather than their memory addresses.
-        if (originalWord.equals(reversedWord)) {
-            System.out.println("Success: '" + originalWord + "' is a palindrome.");
+        
+        // Display result
+        if (isPalindrome) {
+            System.out.println("Result: '" + word + "' is a palindrome.");
         } else {
-            System.out.println("Failure: '" + originalWord + "' is NOT a palindrome.");
+            System.out.println("Result: '" + word + "' is NOT a palindrome.");
         }
     }
 }
