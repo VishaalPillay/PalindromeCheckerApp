@@ -1,31 +1,27 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
+public class PalindromeCheckerApp {
 
-public static void main(String[] args) {
-        String word = "racecar"; 
+    public static void main(String[] args) {
+        String word = "deified"; 
         
-        // 1. Initialize Stack (LIFO) and Queue (FIFO)
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        // 1. Initialize Deque (Double Ended Queue)
+        Deque<Character> deque = new ArrayDeque<>();
         
-        // 2. Enqueue characters to Queue and Push to Stack
+        // 2. Insert characters into the deque
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            stack.push(c); // Push operation
-            queue.add(c);  // Enqueue operation
+            deque.addLast(word.charAt(i));
         }
         
         boolean isPalindrome = true;
         
-        // 3. Compare dequeue (queue) vs pop (stack)
-        // Since Queue gives normal order and Stack gives reverse order,
-        // they must match perfectly for a palindrome.
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            char queueChar = queue.remove(); // Dequeue operation
-            char stackChar = stack.pop();    // Pop operation
+        // 3. Remove first & last elements and compare until empty (or 1 element left)
+        while (deque.size() > 1) {
+            char front = deque.removeFirst(); // Get and remove from the front
+            char rear = deque.removeLast();   // Get and remove from the back
             
-            if (queueChar != stackChar) {
+            // Front and Rear Access Comparison
+            if (front != rear) {
                 isPalindrome = false;
                 break; // Exit early if mismatch found
             }
@@ -38,3 +34,4 @@ public static void main(String[] args) {
             System.out.println("Result: '" + word + "' is NOT a palindrome.");
         }
     }
+}
