@@ -1,21 +1,37 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
 public class PalindromeCheckerApp {
-public static void main(String[] args) {
-        String originalWord = "level"; 
-        String reversedWord = "";
 
-        // 1. Loop (for loop) - Iterating backwards through the string
-        // 2. String Concatenation (+) & Immutability - Because Strings are immutable,
-        //    every time this loop runs, a brand new String object is created in memory.
-        for (int i = originalWord.length() - 1; i >= 0; i--) {
-            reversedWord += originalWord.charAt(i);
+    public static void main(String[] args) {
+        String word = "deified"; 
+        
+        // 1. Initialize Deque (Double Ended Queue)
+        Deque<Character> deque = new ArrayDeque<>();
+        
+        // 2. Insert characters into the deque
+        for (int i = 0; i < word.length(); i++) {
+            deque.addLast(word.charAt(i));
         }
-
-        // 3. equals() Method - We use this instead of "==" to compare the actual 
-        //    characters inside the string, rather than their memory addresses.
-        if (originalWord.equals(reversedWord)) {
-            System.out.println("Success: '" + originalWord + "' is a palindrome.");
+        
+        boolean isPalindrome = true;
+        
+        // 3. Remove first & last elements and compare until empty (or 1 element left)
+        while (deque.size() > 1) {
+            char front = deque.removeFirst(); // Get and remove from the front
+            char rear = deque.removeLast();   // Get and remove from the back
+            
+            // Front and Rear Access Comparison
+            if (front != rear) {
+                isPalindrome = false;
+                break; // Exit early if mismatch found
+            }
+        }
+        
+        // Print result
+        if (isPalindrome) {
+            System.out.println("Result: '" + word + "' is a palindrome.");
         } else {
-            System.out.println("Failure: '" + originalWord + "' is NOT a palindrome.");
+            System.out.println("Result: '" + word + "' is NOT a palindrome.");
         }
     }
 }
