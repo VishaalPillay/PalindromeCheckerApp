@@ -1,28 +1,29 @@
+import java.util.Stack;
+
 public class PalindromeCheckerApp {
 public static void main(String[] args) {
-        String word = "racecar"; 
+        String word = "radar"; 
         
-        // 1. Character Array (char[]) - Convert string to primitive array
-        char[] charArray = word.toCharArray();
+        // 1. Stack Data Structure (LIFO)
+        Stack<Character> stack = new Stack<>();
+        
+        // 2. Push Operation - Insert characters into the stack
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
+        }
         
         boolean isPalindrome = true;
         
-        // 2. Array Indexing & Two-Pointer Technique
-        int left = 0;                         // Pointer at the start
-        int right = charArray.length - 1;     // Pointer at the end
-        
-        // 3. Time Complexity Awareness - Loop only runs for half the array length
-        while (left < right) {
-            // Compare start & end characters
-            if (charArray[left] != charArray[right]) {
-                isPalindrome = false; 
-                break; // Exit early if a mismatch is found!
+        // 3. Pop Operation & Reversal Logic - Pop and compare
+        for (int i = 0; i < word.length(); i++) {
+            // Pop removes and returns the top element from the stack
+            if (word.charAt(i) != stack.pop()) {
+                isPalindrome = false;
+                break; // Exit early if a mismatch is found
             }
-            left++;  // Move start pointer forward
-            right--; // Move end pointer backward
         }
         
-        // Display result
+        // Print result
         if (isPalindrome) {
             System.out.println("Result: '" + word + "' is a palindrome.");
         } else {
