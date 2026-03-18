@@ -1,40 +1,42 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.Scanner;
 
-public static void main(String[] args) {
-        String word = "racecar"; 
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         
-        // 1. Initialize Stack (LIFO) and Queue (FIFO)
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        System.out.print("Enter a string to check: ");
+        String originalString = scanner.nextLine();
         
-        // 2. Enqueue characters to Queue and Push to Stack
-        for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            stack.push(c); // Push operation
-            queue.add(c);  // Enqueue operation
-        }
+        // Flow Step 1: Normalize string using regex to remove spaces and toLowerCase for case insensitivity
+        String normalizedString = originalString.replaceAll("\\s+", "").toLowerCase();
         
-        boolean isPalindrome = true;
-        
-        // 3. Compare dequeue (queue) vs pop (stack)
-        // Since Queue gives normal order and Stack gives reverse order,
-        // they must match perfectly for a palindrome.
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            char queueChar = queue.remove(); // Dequeue operation
-            char stackChar = stack.pop();    // Pop operation
-            
-            if (queueChar != stackChar) {
-                isPalindrome = false;
-                break; // Exit early if mismatch found
-            }
-        }
-        
-        // Print result
-        if (isPalindrome) {
-            System.out.println("Result: '" + word + "' is a palindrome.");
+        // Flow Step 2: Apply logic to check if it's a palindrome
+        if (isPalindrome(normalizedString)) {
+            System.out.println("\"" + originalString + "\" IS a palindrome.");
         } else {
-            System.out.println("Result: '" + word + "' is NOT a palindrome.");
+            System.out.println("\"" + originalString + "\" IS NOT a palindrome.");
         }
+        
+        scanner.close();
     }
+
+    /**
+     * Helper method to check if a normalized string is a palindrome.
+     * Uses the two-pointer approach (Array/String concept).
+     */
+    private static boolean isPalindrome(String str) {
+        int left = 0;
+        int right = str.length() - 1;
+        
+        while (left < right) {
+            // If characters at the pointers don't match, it's not a palindrome
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
