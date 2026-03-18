@@ -1,5 +1,4 @@
 import java.util.*;
-
 interface PalindromeStrategy {
     boolean check(String text);
 }
